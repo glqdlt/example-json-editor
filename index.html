@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./node_modules/bootstrap/dist/css/bootstrap-reboot.min.css" rel="stylesheet">
+    <link href="./node_modules/bootstrap/dist/css/bootstrap-grid.min.css" rel="stylesheet">
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+</head>
+<body>
+<div>
+    <button id="copy-btn" onclick="copyFunction()">Copy</button>
+    <button id="download-btn" onclick="downloadFunction()">Download</button>
+</div>
+<div id="editor_holder">
+
+</div>
+
+</body>
+<script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="./node_modules/@json-editor/json-editor/dist/jsoneditor.min.js"></script>
+<script src="./node_modules/file-saver/FileSaver.min.js"></script>
+<script>
+    'use strict';
+    JSONEditor.defaults.options.theme = 'bootstrap3';
+
+    let editor = new JSONEditor(document.getElementById("editor_holder"), {
+        schema: {
+            type: "object",
+            properties: {}
+        }
+    });
+
+    let copyFunction = function () {
+        const el = document.createElement("textarea")
+        el.value = JSON.stringify(editor.getValue());
+        el.style.display = 'none';
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+    };
+
+    let downloadFunction = function () {
+        const editVal = editor.getValue();
+        const data = JSON.stringify(editVal);
+        let body = new Blob([data], {type: "text/plain;charset=utf-8"});
+        saveAs(body, editVal.name + ".json");
+    }
+
+    // Set the value
+    // Ajax On Loaded..?
+    editor.setValue(
+        {
+            name: 'jhun',
+            old: 31,
+            gender: 'man',
+            job: 'web programmer'
+        }
+    );
+
+    // Get the value
+    let data = editor.getValue();
+
+    // Validate
+    let errors = editor.validate();
+    if (errors.length) {
+        // Not valid
+    }
+
+    // Listen for changes
+    editor.on("change", function () {
+        console.log(editor.getValue());
+    });
+
+</script>
+</html>

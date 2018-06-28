@@ -1,0 +1,17 @@
+{
+  "name": "example-json-editor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "glqdlt",
+  "license": "MIT",
+  "dependencies": {
+    "@json-editor/json-editor": "^1.1.0-beta.1",
+    "bootstrap": "^4.1.1",
+    "file-saver": "^1.3.8",
+    "jquery": "^3.3.1"
+  }
+}
